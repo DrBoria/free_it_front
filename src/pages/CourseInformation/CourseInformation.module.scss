@@ -1,0 +1,15 @@
+.subtitle {
+  color: #0f3d59;
+  margin-bottom: 8px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text_container {
+  @extend .container;
+  margin-bottom: 40px;
+}

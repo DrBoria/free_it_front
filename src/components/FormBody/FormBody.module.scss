@@ -1,0 +1,24 @@
+.form__body {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  min-height: 300px;
+  padding: 48px 116px 64px;
+}
+
+.form__body_subtitle {
+  color: #0f3d59;
+  margin-bottom: 8px;
+}
+
+@media screen and (max-width: 540px) {
+  .form__body {
+    padding: 16px 20px 24px;
+  }
+}
+
+@media only screen and (min-device-width: 540px) and (max-device-width: 768px) {
+  .form__body {
+    padding: 24px 24px 32px;
+  }
+}

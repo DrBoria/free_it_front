@@ -1,0 +1,29 @@
+.check-field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.check_mark {
+  width: 12px;
+  height: 12px;
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.valid {
+  @extend .check_mark;
+  background: #00b307;
+}
+
+.invalid {
+  @extend .check_mark;
+  background: rgba(15, 61, 89, 0.5);
+}
+
+.not_dynamic {
+  @extend .check_mark;
+  background: #0f3d59;
+}

@@ -1,0 +1,4 @@
+node_modules
+**/_*
+react-app-env.d.ts
+custom.d.ts

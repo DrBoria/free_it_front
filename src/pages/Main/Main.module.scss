@@ -1,0 +1,138 @@
+.main {
+  padding: 56px 0px;
+  background: linear-gradient(to bottom, #f7f9fc 167px, #ffffff 167px); 
+  flex: 1;
+}
+
+.header {
+  display: flex;
+  background-color: #00091f;
+  background-image: url(../../styles/images/bg_header.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  padding-top: 42px;
+  padding-bottom: 42px;
+}
+
+.logo_header {
+  margin-left: 14vw;
+}
+
+.footer {
+  display: flex;
+  padding: 40px 0;
+  background-color: #00091f;
+  background-image: url(../../styles/images/bg_footer.png);
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 70vw 100%;
+  align-items: center;
+}
+
+.logo_footer {
+  width: 203px;
+  height: 69px;
+  margin-left: 14vw;
+}
+
+.company_info {
+  margin-left: 100px;
+  display: flex;
+  flex-direction: column;
+
+  a {
+    text-decoration: none;
+    color: #1470a4;
+    white-space: nowrap;
+  }
+
+  a:hover {
+    color: #23527c;
+    text-decoration: underline;
+  }
+}
+
+.info_date {
+  color: #fff;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.links {
+  color: #fff;
+  font-size: 11px;
+  line-height: 16px;
+}
+
+@media screen and (max-width: 540px) {
+  .header {
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 0px;
+  }
+
+  .logo_header {
+    margin: 20px;
+    width: 158px;
+    height: 54px;
+  }
+
+  .logo_footer {
+    display: none;
+  }
+
+  .footer {
+    padding: 26px 15px;
+    background-color: #00091f;
+    background-position: center;
+    background-size: cover;
+    align-items: center;
+  }
+
+  .company_info {
+    margin-left: 15px;
+    margin-right: 25px;
+  }
+
+  .main {
+    padding: 0;
+    background: #ffffff;
+  }
+}
+
+@media only screen and (min-device-width: 540px) and (max-device-width: 1024px) {
+  .header {
+    padding: 21px 48px;
+    height: auto;
+  }
+
+  .logo_header {
+    margin: 0;
+    width: 158px;
+    height: 54px;
+  }
+
+  .logo_footer {
+    width: 158px;
+    height: 54px;
+    margin-left: 0;
+  }
+
+  .footer {
+    background-color: #00091f;
+    background-size: 50vw 100%;
+    align-items: center;
+    display: flex;
+    padding: 20px 48px;
+    justify-content: space-between;
+  }
+
+  .links {
+    display: none;
+  }
+
+  .main {
+    padding: 0;
+    background: #ffffff;
+  }
+}
