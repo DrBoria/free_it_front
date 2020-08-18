@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { fetchUpdateApplicant, ICourceData } from 'api/applicant';
+import { fetchUpdateApplicant, IApplicantData } from 'api/applicant';
 import { AppThunk } from 'store';
 
 interface IUpdatedApplicant {
@@ -27,9 +27,10 @@ const initialState: IApplicantState = {
 };
 
 const comments = createSlice({
-  name: 'comments',
+  name: 'applicant',
   initialState,
   reducers: {
+    // creates reducers and actions based on name (applicant)
     updatedApplicantStart(state) {
       state.loading = true;
       state.error = null;
@@ -49,10 +50,15 @@ const comments = createSlice({
 export const { updatedApplicantStart, updatedApplicantSuccess, updatedApplicantFailure } = comments.actions;
 export default comments.reducer;
 
-export const updateApplicant = (courceData: ICourceData): AppThunk => async (dispatch) => {
+/**
+ * Combined action for updating appicant info
+ * While fiering makes query to applicant endpoint with provided data:
+ * @param applicantData
+ */
+export const updateApplicant = (applicantData: IApplicantData): AppThunk => async (dispatch) => {
   try {
     dispatch(updatedApplicantStart());
-    const updatedApplicant: IUpdatedApplicant = await fetchUpdateApplicant(courceData);
+    const updatedApplicant: IUpdatedApplicant = await fetchUpdateApplicant(applicantData);
     dispatch(updatedApplicantSuccess({ ...updatedApplicant }));
   } catch (err) {
     dispatch(updatedApplicantFailure(err));

@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { fetchUpdateCourses, ICourceData } from 'api/courses';
+import { fetchUpdateCourses, ICourseData } from 'api/courses';
 import { AppThunk } from 'store';
 
 interface IUpdatedCourse {
@@ -26,6 +26,7 @@ const comments = createSlice({
   name: 'courses',
   initialState,
   reducers: {
+    // creates reducers and actions based on name (applicant)
     updatedCourcesStart(state) {
       state.loading = true;
       state.error = null;
@@ -45,10 +46,15 @@ const comments = createSlice({
 export const { updatedCourcesStart, updatedCourcesSuccess, updatedCourcesFailure } = comments.actions;
 export default comments.reducer;
 
-export const updateCourses = (courceData: ICourceData): AppThunk => async (dispatch) => {
+/**
+ * Combined action for updating courses
+ * While fiering makes query to courses endpoint with provided data:
+ * @param courseData
+ */
+export const updateCourses = (courseData: ICourseData): AppThunk => async (dispatch) => {
   try {
     dispatch(updatedCourcesStart());
-    const updatedCourse: IUpdatedCourse = await fetchUpdateCourses(courceData);
+    const updatedCourse: IUpdatedCourse = await fetchUpdateCourses(courseData);
     dispatch(updatedCourcesSuccess({ ...updatedCourse }));
   } catch (err) {
     dispatch(updatedCourcesFailure(err));

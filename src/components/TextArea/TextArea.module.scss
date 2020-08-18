@@ -1,0 +1,9 @@
+.form__body_label {
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 540px) {
+  .form__body_label {
+    margin-top: 16px;
+  }
+}

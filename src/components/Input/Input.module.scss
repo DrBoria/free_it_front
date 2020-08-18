@@ -1,0 +1,43 @@
+.form__body_label {
+  margin-top: 20px;
+}
+
+.form__body_input {
+  width: 443px;
+  margin-top: 4px;
+}
+
+.form__body_input-email {
+  display: flex;
+  flex-direction: row;
+}
+
+.form__body_input-icon {
+  margin-top: 4px;
+  margin-left: -36px;
+  cursor: pointer;
+}
+
+.form__body_input-icon-off {
+  margin-top: 4px;
+  margin-left: -38px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 540px) {
+  .form__body_label {
+    margin-top: 16px;
+  }
+
+  .form__body_input {
+    width: 100%;
+  }
+
+  .requirements {
+    flex-direction: column;
+  }
+
+  .requirements__column-left {
+    margin-right: 0px;
+  }
+}

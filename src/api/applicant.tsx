@@ -1,21 +1,28 @@
 import fetchApi from 'utils/fetch';
 import getBasicHeaders from 'utils/getBasicHeaders';
 
-export interface ICourceData {
+export interface IApplicantData {
   email: string;
   applicantName: string;
   courseName: string;
   courseDescription: string;
 }
 
-export const fetchUpdateApplicant = async (courceData: ICourceData): Promise<any> => {
+/**
+ * Makes qeury with for updating applicant info
+ * @param applicantData
+ */
+export const fetchUpdateApplicant = async (applicantData: IApplicantData): Promise<any> => {
   const headers = getBasicHeaders();
-  const signInUrl: any = await fetchApi(`${process.env.REACT_APP_APPLICANT_ENDPOINT}`, headers, 'POST', courceData);
-  return signInUrl;
+  const response: any = await fetchApi(`${process.env.REACT_APP_APPLICANT_ENDPOINT}`, headers, 'POST', applicantData);
+  return response;
 };
 
+/**
+ * Get current applicant info based on provided headers
+ */
 export const getApplicant = async (): Promise<any> => {
   const headers = getBasicHeaders();
-  const signInUrl: any = await fetchApi(`${process.env.REACT_APP_APPLICANT_ENDPOINT}`, headers, 'GET');
-  return signInUrl;
+  const response: any = await fetchApi(`${process.env.REACT_APP_APPLICANT_ENDPOINT}`, headers, 'GET');
+  return response;
 };
