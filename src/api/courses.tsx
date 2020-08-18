@@ -12,13 +12,13 @@ export interface ICourseData {
  * Makes qeury with for updating courses info
  * @param courseData
  */
-export const fetchUpdateCourses = async (courseData: ICourseData): Promise<any> => {
+export const updateCoursesQuery = async (courseData: ICourseData): Promise<any> => {
   const headers = getBasicHeaders();
   const response: any = await fetchApi(`${process.env.REACT_APP_COURSES_ENDPOINT}`, headers, 'POST', courseData);
   return response;
 };
 
-export const getCourses = async (): Promise<any> => {
+export const getCoursesQuery = async (): Promise<any> => {
   const headers = getBasicHeaders();
   const response: any = await fetchApi(`${process.env.REACT_APP_COURSES_ENDPOINT}`, headers, 'GET');
   return response;

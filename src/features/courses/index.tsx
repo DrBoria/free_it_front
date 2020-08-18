@@ -1,17 +1,20 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { fetchUpdateCourses, ICourseData } from 'api/courses';
+import { updateCoursesQuery, getCoursesQuery, ICourseData } from 'api/courses';
 import { AppThunk } from 'store';
 
-interface IUpdatedCourse {
+interface ICourse {
   name: string;
   description: string;
   id: string;
 }
 
+interface ICourseListResponse {
+  payload: ICourse[];
+}
 interface CommentsState {
-  courses: IUpdatedCourse[];
+  courses: ICourse[];
   loading: boolean;
   error: string | null;
 }
@@ -27,11 +30,11 @@ const comments = createSlice({
   initialState,
   reducers: {
     // creates reducers and actions based on name (applicant)
-    updatedCourcesStart(state) {
+    fetchCoursesDataStart(state) {
       state.loading = true;
       state.error = null;
     },
-    updatedCourcesSuccess(state, action: PayloadAction<IUpdatedCourse>) {
+    updatedCourcesSuccess(state, action: PayloadAction<ICourse>) {
       state.courses = state.courses.map((course) => (course.id === action.payload.id ? action.payload : course));
       state.loading = false;
       state.error = null;
@@ -40,10 +43,25 @@ const comments = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    getCoursesSuccess(state, action) {
+      state.courses = action.payload.lenght;
+      state.loading = false;
+      state.error = null;
+    },
+    getCoursesFailure(state, action: PayloadAction<string>) {
+      state.loading = false;
+      state.error = action.payload;
+    },
   },
 });
 
-export const { updatedCourcesStart, updatedCourcesSuccess, updatedCourcesFailure } = comments.actions;
+export const {
+  fetchCoursesDataStart,
+  updatedCourcesSuccess,
+  updatedCourcesFailure,
+  getCoursesSuccess,
+  getCoursesFailure,
+} = comments.actions;
 export default comments.reducer;
 
 /**
@@ -53,10 +71,27 @@ export default comments.reducer;
  */
 export const updateCourses = (courseData: ICourseData): AppThunk => async (dispatch) => {
   try {
-    dispatch(updatedCourcesStart());
-    const updatedCourse: IUpdatedCourse = await fetchUpdateCourses(courseData);
-    dispatch(updatedCourcesSuccess({ ...updatedCourse }));
+    dispatch(fetchCoursesDataStart());
+    const updatedCourse: ICourse = await updateCoursesQuery(courseData);
+    dispatch(getCoursesSuccess({ ...updatedCourse }));
   } catch (err) {
-    dispatch(updatedCourcesFailure(err));
+    dispatch(getCoursesFailure(err));
+  }
+};
+
+/**
+ * Fetch list of existing courses on portal
+ */
+export const getCourses = (): AppThunk => async (dispatch) => {
+  try {
+    dispatch(fetchCoursesDataStart());
+    const courseList: ICourseListResponse = await getCoursesQuery();
+    if (!courseList.payload.length) throw Error('no available courses');
+    dispatch(getCoursesSuccess({ ...courseList }));
+  } catch (err) {
+    // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
+    setTimeout(() => {
+      dispatch(updatedCourcesFailure(err));
+    }, 1000);
   }
 };

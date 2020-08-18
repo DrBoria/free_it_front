@@ -12,7 +12,7 @@ export interface IApplicantData {
  * Makes qeury with for updating applicant info
  * @param applicantData
  */
-export const fetchUpdateApplicant = async (applicantData: IApplicantData): Promise<any> => {
+export const updateApplicantQuery = async (applicantData: IApplicantData): Promise<any> => {
   const headers = getBasicHeaders();
   const response: any = await fetchApi(`${process.env.REACT_APP_APPLICANT_ENDPOINT}`, headers, 'POST', applicantData);
   return response;
@@ -21,7 +21,7 @@ export const fetchUpdateApplicant = async (applicantData: IApplicantData): Promi
 /**
  * Get current applicant info based on provided headers
  */
-export const getApplicant = async (): Promise<any> => {
+export const getApplicantQuery = async (): Promise<any> => {
   const headers = getBasicHeaders();
   const response: any = await fetchApi(`${process.env.REACT_APP_APPLICANT_ENDPOINT}`, headers, 'GET');
   return response;

@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { fetchUpdateApplicant, IApplicantData } from 'api/applicant';
+import { updateApplicantQuery, IApplicantData } from 'api/applicant';
 import { AppThunk } from 'store';
 
 interface IUpdatedApplicant {
@@ -58,9 +58,12 @@ export default comments.reducer;
 export const updateApplicant = (applicantData: IApplicantData): AppThunk => async (dispatch) => {
   try {
     dispatch(updatedApplicantStart());
-    const updatedApplicant: IUpdatedApplicant = await fetchUpdateApplicant(applicantData);
+    const updatedApplicant: IUpdatedApplicant = await updateApplicantQuery(applicantData);
     dispatch(updatedApplicantSuccess({ ...updatedApplicant }));
   } catch (err) {
-    dispatch(updatedApplicantFailure(err));
+    // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
+    setTimeout(() => {
+      dispatch(updatedApplicantFailure(err));
+    }, 1000);
   }
 };
