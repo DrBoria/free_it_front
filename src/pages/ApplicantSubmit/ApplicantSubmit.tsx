@@ -23,13 +23,14 @@ const CreateAccount = () => {
   const submitApplicant = (e?: any) => {
     e?.preventDefault();
     const { applicantName, email, courseName, courseDescription } = e.target;
-    // @ts-ignore
-    updateApplicant({
-      applicantName: applicantName.value,
-      email: email.value,
-      courseName: courseName.value,
-      courseDescription: courseDescription.value,
-    })(dispatcher);
+    dispatcher(
+      updateApplicant({
+        applicantName: applicantName.value,
+        email: email.value,
+        courseName: courseName.value,
+        courseDescription: courseDescription.value,
+      }),
+    );
   };
 
   // Plain page with generic form
