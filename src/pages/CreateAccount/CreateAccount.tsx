@@ -16,13 +16,14 @@ const CreateAccount = () => {
   const sumitMentor = (e?: any) => {
     e?.preventDefault();
     const { applicantName, email, courseName, courseDescription } = e.target;
-    // @ts-ignore
-    updateCourses({
-      applicantName: applicantName.value,
-      email: email.value,
-      courseName: courseName.value,
-      courseDescription: courseDescription.value,
-    })(dispatcher);
+    dispatcher(
+      updateCourses({
+        applicantName: applicantName.value,
+        email: email.value,
+        courseName: courseName.value,
+        courseDescription: courseDescription.value,
+      }),
+    );
   };
 
   return (

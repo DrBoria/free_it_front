@@ -16,9 +16,8 @@ const BankAccountVerificationWidget = () => {
   const { courses, loading, error } = useSelector((state: RootState) => state.courses);
   // Same ad component did mount
   useEffect(() => {
-    // @ts-ignore
     // Fetch only if there is no loaded courses
-    if (!courses.length) getCourses()(dispatcher);
+    if (!courses.length) dispatcher(getCourses());
   }, []);
 
   return (
