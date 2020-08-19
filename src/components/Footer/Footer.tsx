@@ -1,18 +1,36 @@
 import React, { FC } from 'react';
-
-import styles from './Footer.module.scss';
+import { makeStyles } from '@material-ui/core/styles';
+import { createStyles, Grid } from '@material-ui/core';
 
 type FooterProps = {
   title: string;
 };
 
-const Footer: FC<FooterProps> = ({ title }) => (
-  <div className={styles.form__header}>
-    <h4 className={styles.form__header_title}>{title}</h4>
-    <a href="https://t.me/freeit_blr" target="_blank" rel="noopener noreferrer">
-      наш Telegram
-    </a>
-  </div>
+const useStyles = makeStyles(() =>
+  createStyles({
+    footer: {
+      backgroundColor: '#2371a5',
+      color: '#fff',
+      height: '100%',
+    },
+  }),
 );
+
+const Footer: FC<FooterProps> = ({ title }) => {
+  const classes = useStyles();
+
+  return (
+    <Grid container item className={classes.footer} justify="center">
+      <Grid item>
+        <h4>{title}</h4>
+      </Grid>
+      <Grid item>
+        <a href="https://t.me/freeit_blr" target="_blank" rel="noopener noreferrer">
+          наш Telegram
+        </a>
+      </Grid>
+    </Grid>
+  );
+};
 
 export default Footer;
