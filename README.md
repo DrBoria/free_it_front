@@ -37,3 +37,16 @@ Please use following style/princeples:
        It means - instead of redefining styles on every page - just make new type of button/input inside button/input component and just pass this type on your page
     3) Make pages small and readable as it possible (no need to make more than 40 lines of html inside page)
     4) If you need to make query - add it to a feature folder based on domain
+
+HOW TO DEPLOY FRONT-END TO THE AWS
+-----------------
+
+    1) Create AWS access and secret keys for your IAM user
+    2) Go to ~/.aws folder
+    3) Open credentials file
+    4) Add your profile with credentials:
+            [free-it]
+            aws_access_key_id = ${YOUR_ACCESS_KEY}
+            aws_secret_access_key = ${YOUR_SECRET_KEY}
+            region=us-east-1
+    5) From the project root directory run ./script/deploy.sh ${YOUR_PROFILE_NAME}
