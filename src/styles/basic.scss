@@ -113,7 +113,7 @@ textarea {
   }
 
   &:hover {
-    border: 1px solid #2371a5;
+    border: 1px solid #3f51b5;
     box-shadow: 0px 0px 4px rgba(35, 113, 165, 0.04);
   }
 
@@ -187,7 +187,7 @@ input[type='checkbox'] {
   width: 16px;
   background-color: transparent;
   border-radius: 4px;
-  border: 2px solid #2371a5;
+  border: 2px solid #3f51b5;
 }
 
 .checkbox-label .checkbox-custom-unchecked {
@@ -202,7 +202,7 @@ input[type='checkbox'] {
   -ms-transform: rotate(0deg) scale(1);
   transform: rotate(0deg) scale(1);
   opacity: 1;
-  border: 2px solid #2371a5;
+  border: 2px solid #3f51b5;
 }
 
 .checkbox-label .checkbox-custom::after {
@@ -213,7 +213,7 @@ input[type='checkbox'] {
   height: 0px;
   width: 0px;
   border-radius: 4px;
-  border: solid #2371a5;
+  border: solid #3f51b5;
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(0deg) scale(0);
   -ms-transform: rotate(0deg) scale(0);
@@ -230,7 +230,7 @@ input[type='checkbox'] {
   top: 2px;
   width: 4px;
   height: 8px;
-  border: solid #2371a5;
+  border: solid #3f51b5;
   border-width: 0 2px 2px 0;
   background-color: transparent;
   border-radius: 0;

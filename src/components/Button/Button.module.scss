@@ -19,7 +19,7 @@
   &-next {
     @extend .button;
     color: #ffffff;
-    background: #2371a5;
+    background: #3f51b5;
 
     &:disabled {
       background: #d2deee;
@@ -32,7 +32,7 @@
 
   &-back {
     @extend .button;
-    color: #2371a5;
+    color: #3f51b5;
     background: inherit;
     border: 1px solid transparent;
 
@@ -62,7 +62,7 @@
 
 .alternative-bordered {
   @extend.alternative;
-  border: 1px solid #2371a5;
+  border: 1px solid #3f51b5;
 }
 
 .alternative-bordered:hover {
@@ -92,6 +92,6 @@
   }
 
   .button-back {
-    border: 1px solid #2371a5;
+    border: 1px solid #3f51b5;
   }
 }

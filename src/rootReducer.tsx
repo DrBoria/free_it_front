@@ -2,11 +2,11 @@
 import { combineReducers } from '@reduxjs/toolkit';
 // Used for generating type based on reducer
 import coursesReducer from 'features/courses';
-import applicantReducer from 'features/applicant';
+import studentReducer from 'features/student';
 
 const rootReducer = combineReducers({
   courses: coursesReducer,
-  applicant: applicantReducer,
+  student: studentReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

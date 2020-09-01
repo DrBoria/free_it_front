@@ -20,7 +20,7 @@ const comments = createSlice({
   name: 'courses',
   initialState,
   reducers: {
-    // creates reducers and actions based on name (applicant)
+    // creates reducers and actions based on name (student)
     fetchCoursesDataStart(state) {
       state.loading = true;
       state.error = null;
@@ -35,7 +35,7 @@ const comments = createSlice({
       state.error = action.payload;
     },
     getCoursesSuccess(state, action) {
-      state.courses = action.payload.lenght;
+      state.courses = action.payload;
       state.loading = false;
       state.error = null;
     },
@@ -78,7 +78,7 @@ export const getCourses = (): AppThunk => async (dispatch) => {
     dispatch(fetchCoursesDataStart());
     const courseList: ICourseData[] = await getCoursesQuery();
     if (!courseList.length) throw Error('no available courses');
-    dispatch(getCoursesSuccess({ ...courseList }));
+    dispatch(getCoursesSuccess(courseList));
   } catch (err) {
     // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
     setTimeout(() => {

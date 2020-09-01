@@ -9,9 +9,18 @@ type FooterProps = {
 const useStyles = makeStyles(() =>
   createStyles({
     footer: {
-      backgroundColor: '#2371a5',
+      backgroundColor: '#3f51b5',
       color: '#fff',
       height: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      paddingLeft: '80px',
+    },
+    title: {
+      color: '#fff',
+    },
+    socialLink: {
+      color: '#fff',
     },
   }),
 );
@@ -21,12 +30,12 @@ const Footer: FC<FooterProps> = ({ title }) => {
 
   return (
     <Grid container item className={classes.footer} justify="center">
-      <Grid item>
-        <h4>{title}</h4>
+      <Grid item xs={9}>
+        <h4 className={classes.title}>{title}</h4>
       </Grid>
       <Grid item>
-        <a href="https://t.me/freeit_blr" target="_blank" rel="noopener noreferrer">
-          наш Telegram
+        <a className={classes.socialLink} href="https://t.me/freeit_blr" target="_blank" rel="noopener noreferrer">
+          мы в Telegram
         </a>
       </Grid>
     </Grid>

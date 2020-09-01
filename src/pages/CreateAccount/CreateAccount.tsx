@@ -2,7 +2,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import Button from 'components/Button';
+// import Button from 'components/Button';
 import FormHeader from 'components/FormHeader/FormHeader';
 import FormBody from 'components/FormBody/FormBody';
 import Input from 'components/Input';
@@ -29,8 +29,8 @@ const CreateAccount = () => {
   return (
     <>
       <div className="form">
-        <FormHeader title="Пожалуйста, заполните форму регистрации ментора" />
-        <FormBody title="Форма регистрации участника" onSubmit={sumitMentor}>
+        <FormHeader title="В разработке!" />
+        <FormBody title="В разработке!" onSubmit={sumitMentor}>
           <p className="body_text-small">Укажите email</p>
           <Input name="maxStudents" placeholder="Введите имя" labelText="Ваше имя" />
           <Input name="startDate" placeholder="Введите дату начала курса" labelText="Email" />
@@ -38,9 +38,9 @@ const CreateAccount = () => {
           <TextArea name="courseDescription" placeholder="Опишите, о чём курс" labelText="Описание курсы" />
         </FormBody>
       </div>
-      <div className="buttons">
+      {/* <div className="buttons">
         <Button buttonType="next" placeholder="Next" disabled={false} onClick={sumitMentor} />
-      </div>
+      </div> */}
     </>
   );
 };

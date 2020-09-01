@@ -43,7 +43,7 @@ const Main: FC<MainProps> = ({ children }) => {
         {children}
       </Grid>
       <Grid item className={classes.header}>
-        <Footer title="Free It Footer" />
+        <Footer title="Free It Social" />
       </Grid>
     </Grid>
   );

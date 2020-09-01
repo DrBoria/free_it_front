@@ -1,9 +1,6 @@
 /* eslint-disable react/button-has-type */
 import React, { FC } from 'react';
 
-import arrow_left from 'styles/icons/arrow_left.svg';
-import arrow_right from 'styles/icons/arrow_right.svg';
-
 import styles from './Button.module.scss';
 
 type buttonProps = {
@@ -21,7 +18,6 @@ const Button: FC<buttonProps> = ({ buttonType, placeholder, disabled = false, is
         <>
           <button className={styles['button-next']} type="submit" form="appForm" disabled={disabled}>
             {placeholder}
-            <img src={arrow_right} alt="next" className={styles.arrow_right} />
           </button>
         </>
       );
@@ -29,7 +25,6 @@ const Button: FC<buttonProps> = ({ buttonType, placeholder, disabled = false, is
       return (
         <>
           <button className={styles['button-back']} type="button" form="appForm" disabled={disabled}>
-            <img src={arrow_left} alt="back" className={styles.arrow_left} />
             {placeholder}
           </button>
         </>

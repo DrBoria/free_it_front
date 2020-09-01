@@ -13,7 +13,7 @@ export interface ICourseData {
   description: string;
   id: number;
   maxStudents: number;
-  name: string;
+  title: string;
   startDate: string;
 }
 
