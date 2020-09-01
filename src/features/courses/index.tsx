@@ -1,20 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { updateCoursesQuery, getCoursesQuery, ICourseData } from 'api/courses';
+import { updateCoursesQuery, getCoursesQuery, ICourseFormData, ICourseData, ICourseResponse } from 'api/courses';
 import { AppThunk } from 'store';
 
-interface ICourse {
-  name: string;
-  description: string;
-  id: string;
-}
-
-interface ICourseListResponse {
-  payload: ICourse[];
-}
 interface CommentsState {
-  courses: ICourse[];
+  courses: ICourseData[];
   loading: boolean;
   error: string | null;
 }
@@ -34,7 +25,7 @@ const comments = createSlice({
       state.loading = true;
       state.error = null;
     },
-    updatedCourcesSuccess(state, action: PayloadAction<ICourse>) {
+    updatedCourcesSuccess(state, action: PayloadAction<ICourseData>) {
       state.courses = state.courses.map((course) => (course.id === action.payload.id ? action.payload : course));
       state.loading = false;
       state.error = null;
@@ -69,10 +60,10 @@ export default comments.reducer;
  * While fiering makes query to courses endpoint with provided data:
  * @param courseData
  */
-export const updateCourses = (courseData: ICourseData): AppThunk => async (dispatch) => {
+export const updateCourses = (courseData: ICourseFormData): AppThunk => async (dispatch) => {
   try {
     dispatch(fetchCoursesDataStart());
-    const updatedCourse: ICourse = await updateCoursesQuery(courseData);
+    const updatedCourse: ICourseResponse = await updateCoursesQuery(courseData);
     dispatch(getCoursesSuccess({ ...updatedCourse }));
   } catch (err) {
     dispatch(getCoursesFailure(err));
@@ -85,8 +76,8 @@ export const updateCourses = (courseData: ICourseData): AppThunk => async (dispa
 export const getCourses = (): AppThunk => async (dispatch) => {
   try {
     dispatch(fetchCoursesDataStart());
-    const courseList: ICourseListResponse = await getCoursesQuery();
-    if (!courseList.payload.length) throw Error('no available courses');
+    const courseList: ICourseData[] = await getCoursesQuery();
+    if (!courseList.length) throw Error('no available courses');
     dispatch(getCoursesSuccess({ ...courseList }));
   } catch (err) {
     // TODO: remove setTimeout. Used just for demo of redux toolkit functionality

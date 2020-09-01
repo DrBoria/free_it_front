@@ -1,17 +1,15 @@
-FreeIt Front
-=============================
+# FreeIt Front
 
 > App based on typescript, react and redux toolkit (https://redux-toolkit.js.org/tutorials/basic-tutorial)
 
-INSTALLATION
-------------
+## INSTALLATION
 
     git clone https://github.com/DrBoria/free_it_front.git
     cd ./free_it_front
+    cp .env.development .env
     npm i
 
-FOLDERS DESCRIPTION
--------------------
+## FOLDERS DESCRIPTION
 
     public/              public files for build
     src/                 code of all application
@@ -26,9 +24,7 @@ FOLDERS DESCRIPTION
        rootReducer.tsx   reducer combiner
        store.tsx         store of application
 
-
-HOW TO WRITE CODE
------------------
+## HOW TO WRITE CODE
 
 Please use following style/princeples:
 
@@ -38,8 +34,7 @@ Please use following style/princeples:
     3) Make pages small and readable as it possible (no need to make more than 40 lines of html inside page)
     4) If you need to make query - add it to a feature folder based on domain
 
-HOW TO DEPLOY FRONT-END TO THE AWS
------------------
+## HOW TO DEPLOY FRONT-END TO THE AWS
 
     1) Create AWS access and secret keys for your IAM user
     2) Go to ~/.aws folder
