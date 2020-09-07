@@ -42,8 +42,8 @@ const AdminLogin = () => {
   return (
     <>
       <div className="form">
-        <FormHeader title="Пожалуйста заполните форму регистрации участника" />
-        <FormBody title="Форма регистрации участника" onSubmit={adminStudent}>
+        <FormHeader title="Войдите в свой профиль" />
+        <FormBody onSubmit={adminStudent}>
           {/* This is content of form. You can put any component here */}
           <Input name="email" placeholder="Введите email" labelText="Ваше email" />
           <Input name="password" inputType="password" placeholder="Введите пароль" labelText="Ваш пароль" />
