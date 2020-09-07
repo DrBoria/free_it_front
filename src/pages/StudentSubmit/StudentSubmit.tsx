@@ -12,7 +12,7 @@ import TextArea from 'components/TextArea';
 import { applyOnCourse } from 'features/student';
 import { RootState } from 'rootReducer';
 
-const CreateAccount = () => {
+const StudentSubmit = () => {
   // Dispatcher. Used for sending actions based on action creators from 'features' folder
   const dispatcher = useDispatch();
 
@@ -61,4 +61,4 @@ const CreateAccount = () => {
   );
 };
 
-export default CreateAccount;
+export default StudentSubmit;

@@ -23,10 +23,6 @@ export interface ICourseResponse {
 
 const COURSES_URL: string = `${process.env.REACT_APP_BASIC_URL}/${process.env.REACT_APP_COURSES_ENDPOINT}`;
 
-/**
- * Makes qeury with for updating courses info
- * @param courseData
- */
 export const updateCoursesQuery = async (courseData: ICourseFormData): Promise<ICourseResponse> => {
   const headers = getBasicHeaders();
   const response: ICourseResponse = await fetchApi(COURSES_URL, headers, 'PUT', courseData);

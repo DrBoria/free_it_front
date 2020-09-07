@@ -18,7 +18,8 @@ const CourseInformation = () => {
   const history = useHistory();
 
   const { courses, loading, error } = useSelector((state: RootState) => state.courses);
-  // Same ad component did mount
+
+  // Same as component did mount
   useEffect(() => {
     // Fetch only if there is no loaded courses
     if (!courses?.length) dispatcher(getCourses());
