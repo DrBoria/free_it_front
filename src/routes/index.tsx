@@ -6,6 +6,7 @@ import TeacherSubmit from 'pages/TeacherSubmit';
 import AdminLogin from 'pages/AdminLogin';
 import StudentSubmit from 'pages/StudentSubmit';
 import CourseInformation from 'pages/CourseInformation';
+import AppliedUsers from 'pages/AppliedUsers';
 
 export default () => (
   <Route path="/">
@@ -22,6 +23,9 @@ export default () => (
         </Route>
         <Route path="/admin">
           <AdminLogin />
+        </Route>
+        <Route path="/appliedUsers">
+          <AppliedUsers />
         </Route>
       </Switch>
     </Main>

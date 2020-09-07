@@ -14,6 +14,7 @@ export interface ILoginAdminResponse {
 }
 
 const LOGIN_URL: string = `${process.env.REACT_APP_BASIC_URL}/${process.env.REACT_APP_LOGIN}`;
+const SUBSCRIPTIONS_URL: string = `${process.env.REACT_APP_BASIC_URL}/${process.env.REACT_APP_SUBSCRIPTIONS}`;
 
 /**
  * Makes qeury with for updating student info
@@ -26,10 +27,29 @@ export const loginAdminQuery = async (studentData: IAdminCredentials): Promise<I
 };
 
 /**
- * Get current student info based on provided headers
+ * Makes qeury with for updating student info
+ * @param studentData
  */
-export const getStudentQuery = async (): Promise<any> => {
+export const approveCourseApplyQuery = async (applyOnCourseId: number): Promise<ILoginAdminResponse> => {
   const headers = getBasicHeaders();
-  const response: any = await fetchApi(LOGIN_URL, headers, 'GET');
+  const response: ILoginAdminResponse = await fetchApi(
+    `${SUBSCRIPTIONS_URL}/${applyOnCourseId}/accept`,
+    headers,
+    'POST',
+  );
+  return response;
+};
+
+/**
+ * Makes qeury with for updating student info
+ * @param studentData
+ */
+export const rejectCourseApplyQuery = async (applyOnCourseId: number): Promise<ILoginAdminResponse> => {
+  const headers = getBasicHeaders();
+  const response: ILoginAdminResponse = await fetchApi(
+    `${SUBSCRIPTIONS_URL}/${applyOnCourseId}/reject`,
+    headers,
+    'POST',
+  );
   return response;
 };
