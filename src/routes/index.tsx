@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Main from 'pages/Main';
 import TeacherSubmit from 'pages/TeacherSubmit';
+import AdminLogin from 'pages/AdminLogin';
 import StudentSubmit from 'pages/StudentSubmit';
 import CourseInformation from 'pages/CourseInformation';
 
@@ -18,6 +19,9 @@ export default () => (
         </Route>
         <Route path="/createaccount">
           <TeacherSubmit />
+        </Route>
+        <Route path="/admin">
+          <AdminLogin />
         </Route>
       </Switch>
     </Main>
