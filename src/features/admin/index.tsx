@@ -37,7 +37,7 @@ const comments = createSlice({
   name: 'admin',
   initialState,
   reducers: {
-    // creates reducers and actions based on name (student)
+    /** **********LOGIN****************** */
     loginAdminStart(state) {
       state.loading = true;
       state.error = null;
@@ -53,6 +53,8 @@ const comments = createSlice({
       state.error = action.payload;
       state.success = false;
     },
+
+    /** **********GET USERS WHO APPLIED ON COURSE****************** */
     getAppliedUsersStart(state) {
       state.loading = true;
       state.error = null;
@@ -69,6 +71,26 @@ const comments = createSlice({
       state.error = action.payload;
       state.success = false;
     },
+
+    /** **********APPLY ON COURSE****************** */
+    courseApplyStart(state) {
+      state.loading = true;
+      state.error = null;
+      state.success = false;
+    },
+    courseApplySuccess(state, action: PayloadAction<number>) {
+      state.usersCards = state.usersCards.filter((userCard) => userCard.id !== action.payload);
+      state.loading = false;
+      state.error = null;
+      state.success = true;
+    },
+    courseApplyFailure(state, action: PayloadAction<string>) {
+      state.loading = false;
+      state.error = action.payload;
+      state.success = false;
+    },
+
+    /** **********GET UNVERIFIED****************** */
     getUnverifiedUsersStart(state) {
       state.loading = true;
       state.error = null;
@@ -85,6 +107,8 @@ const comments = createSlice({
       state.error = action.payload;
       state.success = false;
     },
+
+    /** **********APPLY ON COURSE****************** */
     userVerificationStart(state) {
       state.loading = true;
       state.error = null;
@@ -97,22 +121,6 @@ const comments = createSlice({
       state.success = true;
     },
     userVerificationFailure(state, action: PayloadAction<string>) {
-      state.loading = false;
-      state.error = action.payload;
-      state.success = false;
-    },
-    courseApplyStart(state) {
-      state.loading = true;
-      state.error = null;
-      state.success = false;
-    },
-    courseApplySuccess(state, action: PayloadAction<number>) {
-      state.usersCards = state.usersCards.filter((userCard) => userCard.id !== action.payload);
-      state.loading = false;
-      state.error = null;
-      state.success = true;
-    },
-    courseApplyFailure(state, action: PayloadAction<string>) {
       state.loading = false;
       state.error = action.payload;
       state.success = false;
@@ -140,8 +148,7 @@ export const {
 export default comments.reducer;
 
 /**
- * Combined action for updating appicant info
- * While fiering makes query to student endpoint with provided data:
+ * Login admin and put token to every new query
  * @param adminCredentials
  */
 export const loginAdmin = (adminCredentials: IAdminCredentials): AppThunk => async (dispatch) => {
@@ -153,16 +160,12 @@ export const loginAdmin = (adminCredentials: IAdminCredentials): AppThunk => asy
     headers.set('bearer', `${updatedStudent.token?.accessToken}`);
     dispatch(loginAdminSuccess());
   } catch (err) {
-    // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
-    setTimeout(() => {
-      dispatch(loginAdminFailure(err));
-    }, 1000);
+    dispatch(loginAdminFailure(err));
   }
 };
 
 /**
- * Combined action for updating appicant info
- * While fiering makes query to student endpoint with provided data:
+ * Fetch list of users who appliet to passing some courses
  * @param adminCredentials
  */
 export const getAppliedUsers = (): AppThunk => async (dispatch) => {
@@ -172,17 +175,38 @@ export const getAppliedUsers = (): AppThunk => async (dispatch) => {
 
     dispatch(getAppliedUsersSuccess(usersList));
   } catch (err) {
-    // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
-    setTimeout(() => {
-      dispatch(getAppliedUsersFailure(err));
-    }, 1000);
+    dispatch(getAppliedUsersFailure(err));
   }
 };
 
 /**
- * Combined action for updating appicant info
- * While fiering makes query to student endpoint with provided data:
- * @param adminCredentials
+ * Approve user to pass selected course
+ */
+export const approveCourseApply = (applyOnCourseId: number): AppThunk => async (dispatch) => {
+  try {
+    dispatch(courseApplyStart());
+    await approveCourseApplyQuery(applyOnCourseId);
+    dispatch(courseApplySuccess(applyOnCourseId));
+  } catch (err) {
+    dispatch(courseApplyFailure(err));
+  }
+};
+
+/**
+ * Reject user to pass selected course
+ */
+export const rejectCourseApply = (applyOnCourseId: number): AppThunk => async (dispatch) => {
+  try {
+    dispatch(courseApplyStart());
+    await rejectCourseApplyQuery(applyOnCourseId);
+    dispatch(courseApplySuccess(applyOnCourseId));
+  } catch (err) {
+    dispatch(courseApplyFailure(err));
+  }
+};
+
+/**
+ * Fetch unverified, but registred on portal users (teachers and students)
  */
 export const getUnverifiedUsers = (): AppThunk => async (dispatch) => {
   try {
@@ -191,53 +215,12 @@ export const getUnverifiedUsers = (): AppThunk => async (dispatch) => {
 
     dispatch(getUnverifiedUsersSuccess(usersList));
   } catch (err) {
-    // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
-    setTimeout(() => {
-      dispatch(getAppliedUsersFailure(err));
-    }, 1000);
+    dispatch(getAppliedUsersFailure(err));
   }
 };
 
 /**
- * Combined action for updating appicant info
- * While fiering makes query to student endpoint with provided data:
- * @param studentData
- */
-export const approveCourseApply = (applyOnCourseId: number): AppThunk => async (dispatch) => {
-  try {
-    dispatch(courseApplyStart());
-    await approveCourseApplyQuery(applyOnCourseId);
-    dispatch(courseApplySuccess(applyOnCourseId));
-  } catch (err) {
-    // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
-    setTimeout(() => {
-      dispatch(courseApplyFailure(err));
-    }, 1000);
-  }
-};
-
-/**
- * Combined action for updating appicant info
- * While fiering makes query to student endpoint with provided data:
- * @param studentData
- */
-export const rejectCourseApply = (applyOnCourseId: number): AppThunk => async (dispatch) => {
-  try {
-    dispatch(courseApplyStart());
-    await rejectCourseApplyQuery(applyOnCourseId);
-    dispatch(courseApplySuccess(applyOnCourseId));
-  } catch (err) {
-    // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
-    setTimeout(() => {
-      dispatch(courseApplyFailure(err));
-    }, 1000);
-  }
-};
-
-/**
- * Combined action for updating appicant info
- * While fiering makes query to student endpoint with provided data:
- * @param studentData
+ * Verify user on portal (teacher and student)
  */
 export const userVerification = (userVerificationData: IUserVerificationData): AppThunk => async (dispatch) => {
   try {

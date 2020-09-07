@@ -26,15 +26,15 @@ export interface IAppliedTeacherResponse extends ITeacherData {
   verified: boolean;
 }
 
-const TeacherS_URL: string = `${process.env.REACT_APP_BASIC_URL}/${process.env.REACT_APP_TEACHER_REGISTRATION}`;
+const TEACHERS_URL: string = `${process.env.REACT_APP_BASIC_URL}/${process.env.REACT_APP_TEACHER_REGISTRATION}`;
 
 /**
- * Makes qeury with for updating Teacher info
+ * Register a teacher and a new course on portal
  * @param TeacherData
  */
 export const applyCourseQuery = async (TeacherData: ITeacherData): Promise<IAppliedTeacherResponse> => {
   const headers = getBasicHeaders();
-  const response: IAppliedTeacherResponse = await fetchApi(TeacherS_URL, headers, 'POST', TeacherData);
+  const response: IAppliedTeacherResponse = await fetchApi(TEACHERS_URL, headers, 'POST', TeacherData);
   return response;
 };
 
@@ -43,6 +43,6 @@ export const applyCourseQuery = async (TeacherData: ITeacherData): Promise<IAppl
  */
 export const getTeacherQuery = async (): Promise<any> => {
   const headers = getBasicHeaders();
-  const response: any = await fetchApi(TeacherS_URL, headers, 'GET');
+  const response: any = await fetchApi(TEACHERS_URL, headers, 'GET');
   return response;
 };

@@ -19,8 +19,7 @@ export interface IAppliedStudentResponse extends IStudentApplyData {
 const STUDENTS_URL: string = `${process.env.REACT_APP_BASIC_URL}/${process.env.REACT_APP_STUDENT_REGISTRATION}`;
 
 /**
- * Makes qeury with for updating student info
- * @param studentData
+ * Apply student on course based on course ID
  */
 export const applyOnCourseQuery = async (studentData: IStudentApplyData): Promise<IAppliedStudentResponse> => {
   const headers = getBasicHeaders();

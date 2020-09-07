@@ -43,7 +43,7 @@ const SUBSCRIPTIONS_URL: string = `${process.env.REACT_APP_BASIC_URL}/${process.
 const USER_VERIFICATION_URL: string = `${process.env.REACT_APP_BASIC_URL}/${process.env.REACT_APP_VERIFY_USER}`;
 
 /**
- * Makes qeury with for updating student info
+ * Login admin with email and password
  * @param studentData
  */
 export const loginAdminQuery = async (studentData: IAdminCredentials): Promise<ILoginAdminResponse> => {
@@ -53,7 +53,7 @@ export const loginAdminQuery = async (studentData: IAdminCredentials): Promise<I
 };
 
 /**
- * Makes qeury with for updating student info
+ * Fetch list of users who applied to courses
  */
 export const getAppliedUsersQuery = async (): Promise<IAppliedUserCardData[]> => {
   const headers = getBasicHeaders();
@@ -62,7 +62,7 @@ export const getAppliedUsersQuery = async (): Promise<IAppliedUserCardData[]> =>
 };
 
 /**
- * Makes qeury with for updating student info
+ * Fetch users (teachers and students) who registred, but not verified by admin
  */
 export const getUnverifiedUserQuery = async (): Promise<IUserCardData[]> => {
   const headers = getBasicHeaders();
@@ -71,8 +71,7 @@ export const getUnverifiedUserQuery = async (): Promise<IUserCardData[]> => {
 };
 
 /**
- * Makes qeury with for updating student info
- * @param studentData
+ * Verify registred on portal user (teacher or student)
  */
 export const userVerificationQuery = async (
   userVerificationData: IUserVerificationData,
@@ -83,8 +82,7 @@ export const userVerificationQuery = async (
 };
 
 /**
- * Makes qeury with for updating student info
- * @param studentData
+ * Approve student on course he was applied
  */
 export const approveCourseApplyQuery = async (applyOnCourseId: number): Promise<ILoginAdminResponse> => {
   const headers = getBasicHeaders();
@@ -97,8 +95,7 @@ export const approveCourseApplyQuery = async (applyOnCourseId: number): Promise<
 };
 
 /**
- * Makes qeury with for updating student info
- * @param studentData
+ * Reject passing course by the student
  */
 export const rejectCourseApplyQuery = async (applyOnCourseId: number): Promise<ILoginAdminResponse> => {
   const headers = getBasicHeaders();
