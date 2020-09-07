@@ -5,78 +5,44 @@ import {
   loginAdminQuery,
   IAdminCredentials,
   ILoginAdminResponse,
+  getAppliedUsersQuery,
+  getUnverifiedUserQuery,
   approveCourseApplyQuery,
   rejectCourseApplyQuery,
+  IAppliedUserCardData,
+  IUserCardData,
+  IUserVerificationData,
+  userVerificationQuery,
 } from 'api/admin';
 import { AppThunk } from 'store';
 import { headers } from 'utils/getBasicHeaders';
 
-export interface IUserCardData {
-  courseDto: {
-    availableCount: number;
-    description: string;
-    id: number;
-    maxStudents: number;
-    startDate: Date;
-    title: string;
-  };
-  id: number;
-  user: {
-    about: string;
-    email: string;
-    firstName: string;
-    id: number;
-    lastName: string;
-    verified: true;
-  };
-}
-
 interface IUserListState {
-  usersCards: IUserCardData[];
+  usersCards: IAppliedUserCardData[];
+  unverifiedUsersCards: IUserCardData[];
   loading: boolean;
   error: string | null;
   success: boolean;
 }
 
 const initialState: IUserListState = {
-  usersCards: [
+  usersCards: [],
+  unverifiedUsersCards: [
     {
-      courseDto: {
-        availableCount: 10,
-        description: 'description',
-        id: 0,
-        maxStudents: 19,
-        startDate: new Date(),
-        title: 'Title course',
-      },
+      about: 'string',
+      email: 'string',
+      firstName: 'string',
       id: 0,
-      user: {
-        about: 'about student',
-        email: 'email@email.com',
-        firstName: 'Name',
-        id: 0,
-        lastName: 'Last Name',
-        verified: true,
-      },
+      lastName: 'string',
+      verified: true,
     },
     {
-      courseDto: {
-        availableCount: 10,
-        description: 'description 2',
-        id: 0,
-        maxStudents: 19,
-        startDate: new Date(),
-        title: 'Title course 2',
-      },
+      about: 'string',
+      email: 'string',
+      firstName: 'string',
       id: 0,
-      user: {
-        about: 'about student',
-        email: 'email@email.com',
-        firstName: 'Name 2',
-        id: 0,
-        lastName: 'Last Name 2',
-        verified: true,
-      },
+      lastName: 'string',
+      verified: true,
     },
   ],
   loading: false,
@@ -104,6 +70,53 @@ const comments = createSlice({
       state.error = action.payload;
       state.success = false;
     },
+    getAppliedUsersStart(state) {
+      state.loading = true;
+      state.error = null;
+      state.success = false;
+    },
+    getAppliedUsersSuccess(state, action: PayloadAction<IAppliedUserCardData[]>) {
+      state.usersCards = action.payload || [];
+      state.loading = false;
+      state.error = null;
+      state.success = true;
+    },
+    getAppliedUsersFailure(state, action: PayloadAction<string>) {
+      state.loading = false;
+      state.error = action.payload;
+      state.success = false;
+    },
+    getUnverifiedUsersStart(state) {
+      state.loading = true;
+      state.error = null;
+      state.success = false;
+    },
+    getUnverifiedUsersSuccess(state, action: PayloadAction<IUserCardData[]>) {
+      state.unverifiedUsersCards = action.payload || [];
+      state.loading = false;
+      state.error = null;
+      state.success = true;
+    },
+    getUnverifiedUsersFailure(state, action: PayloadAction<string>) {
+      state.loading = false;
+      state.error = action.payload;
+      state.success = false;
+    },
+    userVerificationStart(state) {
+      state.loading = true;
+      state.error = null;
+      state.success = false;
+    },
+    userVerificationSuccess(state) {
+      state.loading = false;
+      state.error = null;
+      state.success = true;
+    },
+    userVerificationFailure(state, action: PayloadAction<string>) {
+      state.loading = false;
+      state.error = action.payload;
+      state.success = false;
+    },
     courseApplyStart(state) {
       state.loading = true;
       state.error = null;
@@ -126,6 +139,15 @@ export const {
   courseApplyStart,
   courseApplySuccess,
   courseApplyFailure,
+  getAppliedUsersStart,
+  getAppliedUsersSuccess,
+  getAppliedUsersFailure,
+  getUnverifiedUsersStart,
+  getUnverifiedUsersSuccess,
+  getUnverifiedUsersFailure,
+  userVerificationStart,
+  userVerificationSuccess,
+  userVerificationFailure,
   loginAdminStart,
   loginAdminSuccess,
   loginAdminFailure,
@@ -149,6 +171,44 @@ export const loginAdmin = (adminCredentials: IAdminCredentials): AppThunk => asy
     // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
     setTimeout(() => {
       dispatch(loginAdminFailure(err));
+    }, 1000);
+  }
+};
+
+/**
+ * Combined action for updating appicant info
+ * While fiering makes query to student endpoint with provided data:
+ * @param adminCredentials
+ */
+export const getAppliedUsers = (): AppThunk => async (dispatch) => {
+  try {
+    dispatch(getAppliedUsersStart());
+    const usersList: IAppliedUserCardData[] = await getAppliedUsersQuery();
+
+    dispatch(getAppliedUsersSuccess(usersList));
+  } catch (err) {
+    // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
+    setTimeout(() => {
+      dispatch(getAppliedUsersFailure(err));
+    }, 1000);
+  }
+};
+
+/**
+ * Combined action for updating appicant info
+ * While fiering makes query to student endpoint with provided data:
+ * @param adminCredentials
+ */
+export const getUnverifiedUsers = (): AppThunk => async (dispatch) => {
+  try {
+    dispatch(getUnverifiedUsersStart());
+    const usersList: IUserCardData[] = await getUnverifiedUserQuery();
+
+    dispatch(getUnverifiedUsersSuccess(usersList));
+  } catch (err) {
+    // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
+    setTimeout(() => {
+      dispatch(getAppliedUsersFailure(err));
     }, 1000);
   }
 };
@@ -203,6 +263,24 @@ export const rejectCourseApply = (applyOnCourseId: number): AppThunk => async (d
     // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
     setTimeout(() => {
       dispatch(courseApplyFailure(err));
+    }, 1000);
+  }
+};
+
+/**
+ * Combined action for updating appicant info
+ * While fiering makes query to student endpoint with provided data:
+ * @param studentData
+ */
+export const userVerification = (userVerificationData: IUserVerificationData): AppThunk => async (dispatch) => {
+  try {
+    dispatch(userVerificationStart());
+    await userVerificationQuery(userVerificationData);
+    dispatch(userVerificationSuccess());
+  } catch (err) {
+    // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
+    setTimeout(() => {
+      dispatch(userVerificationFailure(err));
     }, 1000);
   }
 };

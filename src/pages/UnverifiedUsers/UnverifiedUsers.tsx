@@ -4,28 +4,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'rootReducer';
 import classNames from 'classnames';
 
-import { IAppliedUserCardData } from 'api/admin';
-import { approveCourseApply, rejectCourseApply, getAppliedUsers } from 'features/admin';
+import { IUserCardData } from 'api/admin';
+import { getUnverifiedUsers, userVerification } from 'features/admin';
 
 import FormHeader from 'components/FormHeader/FormHeader';
 import FormBody from 'components/FormBody/FormBody';
-import AppliedUserCard from 'components/AppliedUserCard';
+import UnverifiedUserCard from 'components/UnverifiedUserCard';
 
-import styles from './AppliedUsers.module.scss';
+import styles from './UnverifiedUsers.module.scss';
 
-const AppliedUsers = () => {
+const UnverifiedUsers = () => {
   // Dispatcher. Used for sending actions based on action creators from 'features' folder
   const dispatcher = useDispatch();
 
   // Data from store. Could be used multiple selecrots
   // For example:
   // const {student, courses} = useSelector((state: RootState) => state);
-  const { loading, error, usersCards } = useSelector((state: RootState) => state.admin);
+  const { loading, error, unverifiedUsersCards } = useSelector((state: RootState) => state.admin);
 
   // Same as component did mount
   useEffect(() => {
     // Fetch only if there is no loaded courses
-    if (!usersCards?.length) dispatcher(getAppliedUsers());
+    if (!unverifiedUsersCards?.length) dispatcher(getUnverifiedUsers());
   }, []);
 
   return (
@@ -35,12 +35,10 @@ const AppliedUsers = () => {
         <FormBody>
           <div className={styles.container}>
             <div className={classNames('body_text-small', styles.text_container)}>
-              {usersCards.map((userCard: IAppliedUserCardData) => (
-                <AppliedUserCard
-                  courseDto={userCard.courseDto}
-                  user={userCard.user}
-                  apply={() => dispatcher(approveCourseApply(userCard.id))}
-                  reject={() => dispatcher(rejectCourseApply(userCard.id))}
+              {unverifiedUsersCards.map((userCard: IUserCardData) => (
+                <UnverifiedUserCard
+                  user={userCard}
+                  verify={() => dispatcher(userVerification({ id: Number(userCard.id) }))}
                 />
               ))}
 
@@ -56,4 +54,4 @@ const AppliedUsers = () => {
   );
 };
 
-export default AppliedUsers;
+export default UnverifiedUsers;

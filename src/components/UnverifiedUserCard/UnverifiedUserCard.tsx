@@ -14,19 +14,9 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import formatDate from 'utils/date';
+import styles from './UnverifiedUserCard.module.scss';
 
-import styles from './AppliedUserCard.module.scss';
-
-interface IAppliedUserCardProps {
-  courseDto: {
-    availableCount: number;
-    description: string;
-    id: number;
-    maxStudents: number;
-    startDate: Date;
-    title: string;
-  };
+interface IUnverifiedUserCardProps {
   user: {
     about: string;
     email: string;
@@ -35,8 +25,7 @@ interface IAppliedUserCardProps {
     lastName: string;
     verified: boolean;
   };
-  apply: Function;
-  reject: Function;
+  verify: Function;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -57,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const AppliedUserCard: FC<IAppliedUserCardProps> = ({ courseDto, user, apply, reject }) => {
+const AppliedUserCard: FC<IUnverifiedUserCardProps> = ({ user, verify }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = useState<string | false>(false);
 
@@ -86,45 +75,16 @@ const AppliedUserCard: FC<IAppliedUserCardProps> = ({ courseDto, user, apply, re
           </AccordionDetails>
         </Accordion>
 
-        {/* COURSE INFO SECTION */}
-        <Typography variant="h5" component="h2">
-          {courseDto.title}
-        </Typography>
-        <Typography>{`Максимальное количество студентов: ${courseDto.maxStudents}`}</Typography>
-        <Typography>{`Количество свободных мест: ${courseDto.availableCount}`}</Typography>
-        <Typography>{`Дата начала занятий: ${formatDate(courseDto.startDate)}`}</Typography>
-        <Accordion
-          className={classes.accordeon}
-          expanded={expanded === 'aboutCourse'}
-          onChange={handleChange('aboutCourse')}
-        >
-          <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1bh-content" id="panel1bh-header">
-            <Typography className={classes.heading}>О курсе</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>{courseDto.description}</Typography>
-          </AccordionDetails>
-        </Accordion>
-
         {/* APPROVE BUTTONS SECTION */}
         <div className={classes.buttonsContainer}>
           <Button
             variant="contained"
             color="primary"
             onClick={() => {
-              apply();
+              verify();
             }}
           >
-            Подтвердить участие
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => {
-              reject();
-            }}
-          >
-            Отказать
+            Активировать пользователя
           </Button>
         </div>
       </CardContent>
