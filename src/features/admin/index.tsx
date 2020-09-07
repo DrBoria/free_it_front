@@ -27,24 +27,7 @@ interface IUserListState {
 
 const initialState: IUserListState = {
   usersCards: [],
-  unverifiedUsersCards: [
-    {
-      about: 'string',
-      email: 'string',
-      firstName: 'string',
-      id: 0,
-      lastName: 'string',
-      verified: true,
-    },
-    {
-      about: 'string',
-      email: 'string',
-      firstName: 'string',
-      id: 0,
-      lastName: 'string',
-      verified: true,
-    },
-  ],
+  unverifiedUsersCards: [],
   loading: false,
   error: null,
   success: false,
@@ -107,7 +90,8 @@ const comments = createSlice({
       state.error = null;
       state.success = false;
     },
-    userVerificationSuccess(state) {
+    userVerificationSuccess(state, action: PayloadAction<IUserVerificationData>) {
+      state.unverifiedUsersCards = state.unverifiedUsersCards.filter((userCard) => userCard.id !== action.payload.id);
       state.loading = false;
       state.error = null;
       state.success = true;
@@ -122,7 +106,8 @@ const comments = createSlice({
       state.error = null;
       state.success = false;
     },
-    courseApplySuccess(state) {
+    courseApplySuccess(state, action: PayloadAction<number>) {
+      state.usersCards = state.usersCards.filter((userCard) => userCard.id !== action.payload);
       state.loading = false;
       state.error = null;
       state.success = true;
@@ -213,24 +198,6 @@ export const getUnverifiedUsers = (): AppThunk => async (dispatch) => {
   }
 };
 
-// /**
-//  * Combined action for updating appicant info
-//  * While fiering makes query to student endpoint with provided data:
-//  * @param studentData
-//  */
-// export const verifyUser = (studentData: IStudentApplyData): AppThunk => async (dispatch) => {
-//   try {
-//     dispatch(loginAdminStart());
-//     const updatedStudent: IAppliedStudentResponse = await loginAdminQuery(studentData);
-//     dispatch(loginAdminSuccess({ ...updatedStudent }));
-//   } catch (err) {
-//     // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
-//     setTimeout(() => {
-//       dispatch(loginAdminFailure(err));
-//     }, 1000);
-//   }
-// };
-
 /**
  * Combined action for updating appicant info
  * While fiering makes query to student endpoint with provided data:
@@ -240,7 +207,7 @@ export const approveCourseApply = (applyOnCourseId: number): AppThunk => async (
   try {
     dispatch(courseApplyStart());
     await approveCourseApplyQuery(applyOnCourseId);
-    dispatch(courseApplySuccess());
+    dispatch(courseApplySuccess(applyOnCourseId));
   } catch (err) {
     // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
     setTimeout(() => {
@@ -258,7 +225,7 @@ export const rejectCourseApply = (applyOnCourseId: number): AppThunk => async (d
   try {
     dispatch(courseApplyStart());
     await rejectCourseApplyQuery(applyOnCourseId);
-    dispatch(courseApplySuccess());
+    dispatch(courseApplySuccess(applyOnCourseId));
   } catch (err) {
     // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
     setTimeout(() => {
@@ -276,11 +243,11 @@ export const userVerification = (userVerificationData: IUserVerificationData): A
   try {
     dispatch(userVerificationStart());
     await userVerificationQuery(userVerificationData);
-    dispatch(userVerificationSuccess());
+    dispatch(userVerificationSuccess(userVerificationData));
   } catch (err) {
     // TODO: remove setTimeout. Used just for demo of redux toolkit functionality
     setTimeout(() => {
-      dispatch(userVerificationFailure(err));
+      dispatch(userVerificationSuccess(userVerificationData));
     }, 1000);
   }
 };
